@@ -1,1 +1,132 @@
-<p>projet works!</p>
+<nz-card [nzBordered]="false" nzTitle="Projets" [nzExtra]="search">
+  <button (click)="openModalAdd()" nz-button nzType="dashed">
+    Ajouter Projet
+  </button>
+
+  <nz-table
+    nzOffset="4"
+    #filterTable
+    [nzData]="listOfDisplayData"
+    nzTableLayout="fixed"
+  >
+    <thead>
+      <tr>
+        <th
+          nzCustomFilter
+          *ngFor="let column of listOfColumns; trackBy: trackByName"
+          [(nzSortOrder)]="column.sortOrder"
+          [nzSortFn]="column.sortFn"
+          [nzFilterFn]="column.filterFn"
+        >
+          {{ column.name }}
+        </th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of filterTable.data">
+        <td>
+          {{ data.nom }}
+        </td>
+        <td>
+          {{ data?.chantier?.nom }}
+        </td>
+
+        <td nz-row>
+          <button
+            (click)="deleteProjet(data.p_Id)"
+            nz-button
+            nzType="dashed"
+            nzDanger
+            nzShape="circle"
+          >
+            <i nz-icon nzType="delete"></i>
+          </button>
+          <button
+            nz-button
+            (click)="openModalUpdate(data)"
+            nzType="dashed"
+            nzWarning
+            nzShape="circle"
+          >
+            <i nz-icon nzType="edit" nzTheme="outline"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #search>
+  <div nz-row>
+    <input
+      nz-col
+      nz-input
+      placeholder="... Rechercher Projet"
+      (keyup)="searchAll($event)"
+    />
+  </div>
+</ng-template>
+<nz-modal
+  [nzWidth]="'80%'"
+  [(nzVisible)]="isVisibleAdd"
+  nzTitle="Ajouter Projet"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzContent]="add"
+>
+</nz-modal>
+<ng-template #add>
+  <form [formGroup]="validateForm" nz-formy>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="chantier">Chantier</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <select
+          class="dropdown"
+          name="chantier"
+          type="chantier"
+          formControlName="chantier"
+          id="chantier"
+        >
+          <option
+            class="dropdown-content"
+            *ngFor="let item of chantiers"
+            [value]="item?.c_Id"
+          >
+            {{ item?.nom }}
+          </option>
+        </select>
+      </nz-form-control> </nz-form-item
+    ><nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="user">Responsable</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <select
+          class="dropdown"
+          name="user"
+          type="user"
+          formControlName="user"
+          id="user"
+        >
+          <option
+            class="dropdown-content"
+            *ngFor="let item of users"
+            [value]="item?.id"
+          >
+            {{ item?.nom }}
+          </option>
+        </select>
+      </nz-form-control> </nz-form-item
+    ><nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="nom">Nom Du Projet</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input
+          class="dropdown"
+          name="nom"
+          type="nom"
+          formControlName="nom"
+          id="nom"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-template>

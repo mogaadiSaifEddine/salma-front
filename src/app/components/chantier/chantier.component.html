@@ -3,7 +3,7 @@
     <div nz-col [nzSpan]="6" *ngFor="let item of listOfDisplayData">
       <nz-list-item>
         <nz-card [nzTitle]="item.nom">
-          <button (click)="showProjet(item.nom)" nz-button nzType="primary">
+          <button (click)="showProjet(item)" nz-button nzType="primary">
             <i nz-icon nzType="right"></i>
             Projets
           </button>

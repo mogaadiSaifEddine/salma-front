@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ChantierService } from 'src/app/services/chantier.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-chantier',
@@ -9,16 +11,12 @@ import { ChantierService } from 'src/app/services/chantier.service';
 export class ChantierComponent implements OnInit {
   chantiers = [];
   listOfDisplayData: any;
-  listOfColumns: any[] = [
-    {
-      name: 'Chantiers ',
-      sortOrder: null,
 
-      listOfFilter: [],
-      filterFn: null,
-    },
-  ];
-  constructor(private chantService: ChantierService) {}
+  constructor(
+    private chantService: ChantierService,
+    private sharedService: SharedService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getAllChantiers();
@@ -32,9 +30,8 @@ export class ChantierComponent implements OnInit {
     });
   }
   showProjet(channtier: any) {
-    confirm('Projoets   ' + channtier);
-  }
-  trackByName(_: number, item: any): string {
-    return item.name;
+    this.sharedService.chantierId = channtier.c_Id;
+    this.router.navigate(['/projet']);
+    // confirm('Projoets   ' + channtier);
   }
 }

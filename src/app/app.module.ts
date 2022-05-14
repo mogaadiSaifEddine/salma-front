@@ -76,6 +76,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChantierComponent } from './components/chantier/chantier.component';
 import { ProjetComponent } from './components/projet/projet.component';
+import {
+  StepBackwardOutline,
+  CaretLeftOutline,
+  SettingOutline,
+} from '@ant-design/icons-angular/icons';
+const icons: any[] = [StepBackwardOutline, CaretLeftOutline, SettingOutline];
 
 @NgModule({
   declarations: [AppComponent, ChantierComponent, ProjetComponent],
@@ -109,7 +115,7 @@ import { ProjetComponent } from './components/projet/projet.component';
     NzFormModule,
     NzGridModule,
     NzI18nModule,
-    NzIconModule,
+    NzIconModule.forChild(icons),
     NzImageModule,
     NzInputModule,
     NzInputNumberModule,
