@@ -1,4 +1,4 @@
-<nz-card [nzBordered]="false" nzTitle="Projets" [nzExtra]="search">
+<nz-card [nzBordered]="true" nzTitle="Projets" [nzExtra]="search">
   <button (click)="openModalAdd()" nz-button nzType="dashed">
     Ajouter Projet
   </button>
@@ -74,6 +74,8 @@
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()"
   [nzContent]="add"
+  nzOkText="Ok"
+  nzCancelText="Cancel"
 >
 </nz-modal>
 <ng-template #add>

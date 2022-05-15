@@ -18,6 +18,8 @@ export class ProjetService {
     return this.http.delete<any>(`${this.baseUrl}Delete/${id}`);
   }
   addProjet(projet: any) {
+    console.log(projet);
+
     return this.http.post<any>(`${this.baseUrl}add`, projet);
   }
   updateProjet(id: number, projet: any) {

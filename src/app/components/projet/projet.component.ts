@@ -4,6 +4,7 @@ import { ChantierService } from 'src/app/services/chantier.service';
 import { ProjetService } from 'src/app/services/projet.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { UserService } from 'src/app/services/user.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-projet',
@@ -19,7 +20,9 @@ export class ProjetComponent implements OnInit {
   isVisibleAdd = false;
   editMode = false;
   users: any[] = [];
-
+  createMessage(type: string, msg: string): void {
+    this.message.create(type, msg);
+  }
   listOfColumns: any[] = [
     {
       name: 'Projet ',
@@ -41,7 +44,7 @@ export class ProjetComponent implements OnInit {
     private projetService: ProjetService,
     private chantService: ChantierService,
     private userService: UserService,
-
+    private message: NzMessageService,
     private fb: FormBuilder
   ) {}
 
@@ -52,9 +55,12 @@ export class ProjetComponent implements OnInit {
 
   initForm(projet?: any) {
     this.validateForm = this.fb.group({
-      id: [projet?.p_Id ?? null, [Validators.required]],
+      id: [projet?.p_Id ?? null, []],
       nom: [projet?.nom ?? null, [Validators.required]],
-      user: [projet?.users[0] ?? null, [Validators.required]],
+      user: [
+        projet?.users[0] ? projet?.users[0].id : null,
+        [Validators.required],
+      ],
       chantier: [projet?.chantier?.c_Id ?? null, [Validators.required]],
     });
   }
@@ -67,10 +73,13 @@ export class ProjetComponent implements OnInit {
   }
   getProjectsByChantId() {
     this.chntId = this.sharedService.chantierId;
+
     this.projetService.getAllProjets().subscribe((data: any[]) => {
       this.projetList = !!this.chntId
-        ? data.filter((proj) => proj.chantier.c_Id === this.chntId)
-        : data;
+        ? data.filter(
+            (proj) => proj.chantier.c_Id === this.chntId && proj.state === true
+          )
+        : data.filter((proj) => proj.state === true);
       console.log(this.projetList);
       this.listOfDisplayData = [...this.projetList];
     });
@@ -78,7 +87,6 @@ export class ProjetComponent implements OnInit {
     this.sharedService.chantierId = undefined;
     // console.log(chantId);
   }
-  addProject() {}
   getAllChantiers() {
     this.chantService.getAllChant().subscribe((data: any) => {
       this.chantiers = data;
@@ -101,6 +109,7 @@ export class ProjetComponent implements OnInit {
     if (confirm('Are you sure to delete this projet?')) {
       this.projetService.deleteProjet(id).subscribe((data: any) => {
         console.log(data);
+        this.createMessage('success', 'Projet deleted successfully');
         this.getProjectsByChantId();
       });
     }
@@ -124,17 +133,22 @@ export class ProjetComponent implements OnInit {
       ? this.projetService
           .updateProjet(this.validateForm.get('id')?.value, projet)
           .subscribe((data: any) => {
+            this.createMessage('success', 'Projet updated successfully');
             this.getProjectsByChantId();
           })
       : this.projetService.addProjet(projet).subscribe((data: any) => {
           console.log(data);
+          this.createMessage('success', 'Projet added successfully');
           this.getProjectsByChantId();
         });
     this.isVisibleAdd = false;
   }
 
   handleOk() {
-    console.log(this.chantiers);
+    if (!this.validateForm.valid) {
+      this.createMessage('error', 'Please fill all the required fields');
+      return;
+    }
 
     const channt = this.chantiers.find(
       (chant) => chant.c_Id == this.validateForm.get('chantier')?.value
