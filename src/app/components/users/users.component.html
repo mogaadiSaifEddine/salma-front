@@ -1,0 +1,145 @@
+<button
+  (click)="openModal()"
+  *ngIf="userRole === 'responsable'"
+  nz-button
+  nzType="dashed"
+>
+  Ajouter Utilisateur
+</button>
+<nz-table
+  nzOffset="4"
+  #filterTable
+  [nzData]="listOfDisplayData"
+  nzTableLayout="fixed"
+>
+  <thead>
+    <tr>
+      <th
+        nzCustomFilter
+        *ngFor="let column of listOfColumns; trackBy: trackByName"
+        [(nzSortOrder)]="column.sortOrder"
+        [nzSortFn]="column.sortFn"
+        [nzFilterFn]="column.filterFn"
+      >
+        {{ column.name }}
+      </th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of filterTable.data">
+      <td>
+        {{ data?.nom || "N.A" }}
+      </td>
+      <td>
+        {{ data?.prenom }}
+      </td>
+
+      <td nz-row>
+        <button
+          *ngIf="userRole === 'responsable'"
+          (click)="deleteUser(data.id)"
+          nz-button
+          nzType="dashed"
+          nzDanger
+          nzShape="circle"
+        >
+          <i nz-icon nzType="delete"></i>
+        </button>
+        <button
+          *ngIf="userRole === 'responsable'"
+          nz-button
+          (click)="openModalUpdate(data)"
+          nzType="dashed"
+          nzWarning
+          nzShape="circle"
+        >
+          <i nz-icon nzType="edit" nzTheme="outline"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<nz-modal
+  [nzWidth]="'80%'"
+  [(nzVisible)]="isVisibleAdd"
+  nzTitle="Ajouter Projet"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzContent]="add"
+  nzOkText="Ok"
+  nzCancelText="Cancel"
+>
+</nz-modal>
+<ng-template #add>
+  <form [formGroup]="validateForm" nz-formy>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="role">role</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <select
+          class="dropdown"
+          name="role"
+          type="role"
+          formControlName="role"
+          id="role"
+        >
+          <option
+            class="dropdown-content"
+            *ngFor="let item of roles"
+            [value]="item"
+          >
+            {{ item }}
+          </option>
+        </select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="name">Nom </nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input
+          class="dropdown"
+          name="name"
+          type="name"
+          formControlName="name"
+          id="name"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="username">Prenom </nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input
+          class="dropdown"
+          name="username"
+          type="username"
+          formControlName="username"
+          id="username"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="email">email </nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input
+          class="dropdown"
+          name="email"
+          type="email"
+          formControlName="email"
+          id="email"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="password">mot de passe </nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input
+          class="dropdown"
+          name="password"
+          type="password"
+          formControlName="password"
+          id="password"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-template>

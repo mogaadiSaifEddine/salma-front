@@ -82,10 +82,11 @@ import {
   SettingOutline,
 } from '@ant-design/icons-angular/icons';
 import { LoginComponent } from './components/login/login.component';
+import { UsersComponent } from './components/users/users.component';
 const icons: any[] = [StepBackwardOutline, CaretLeftOutline, SettingOutline];
 
 @NgModule({
-  declarations: [AppComponent, ChantierComponent, ProjetComponent, LoginComponent],
+  declarations: [AppComponent, ChantierComponent, ProjetComponent, LoginComponent, UsersComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

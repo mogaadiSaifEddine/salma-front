@@ -19,6 +19,7 @@ export class ProjetComponent implements OnInit {
   public validateForm!: FormGroup;
   isVisibleAdd = false;
   editMode = false;
+  userRole: string | null | undefined = '';
   users: any[] = [];
   createMessage(type: string, msg: string): void {
     this.message.create(type, msg);
@@ -49,6 +50,7 @@ export class ProjetComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userRole = localStorage.getItem('role')?.toLocaleLowerCase();
     this.getProjectsByChantId();
     this.getAllUSers();
   }
@@ -77,7 +79,8 @@ export class ProjetComponent implements OnInit {
     this.projetService.getAllProjets().subscribe((data: any[]) => {
       this.projetList = !!this.chntId
         ? data.filter(
-            (proj) => proj.chantier.c_Id === this.chntId && proj.state === true
+            (proj) =>
+              proj?.chantier?.c_Id === this.chntId && proj.state === true
           )
         : data.filter((proj) => proj.state === true);
       console.log(this.projetList);

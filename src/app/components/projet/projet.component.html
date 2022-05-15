@@ -1,5 +1,10 @@
 <nz-card [nzBordered]="true" nzTitle="Projets" [nzExtra]="search">
-  <button (click)="openModalAdd()" nz-button nzType="dashed">
+  <button
+    (click)="openModalAdd()"
+    *ngIf="userRole === 'responsable'"
+    nz-button
+    nzType="dashed"
+  >
     Ajouter Projet
   </button>
 

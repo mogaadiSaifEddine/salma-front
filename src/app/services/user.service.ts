@@ -6,13 +6,19 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
   baseUrl = 'http://localhost:8080/user/';
-  loginUrl = 'http://localhost:8080/auth/login';
+  authUrl = 'http://localhost:8080/auth/';
   constructor(private http: HttpClient) {}
 
   getAllUSers() {
     return this.http.get<[]>(this.baseUrl);
   }
   login(loginData: any): any {
-    return this.http.post<[]>(this.loginUrl, loginData);
+    return this.http.post<[]>(this.authUrl + 'login', loginData);
+  }
+  signup(signupData: any): any {
+    return this.http.post<[]>(this.authUrl + 'signup', signupData);
+  }
+  deleteUser(id: any) {
+    return this.http.delete(this.baseUrl + id);
   }
 }
