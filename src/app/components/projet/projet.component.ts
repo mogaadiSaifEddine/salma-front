@@ -96,7 +96,7 @@ export class ProjetComponent implements OnInit {
       this.listOfDisplayData = [...this.projetList];
     });
     this.getAllChantiers();
-    this.sharedService.chantierId = undefined;
+    // this.sharedService.chantierId = undefined;
     // console.log(chantId);
   }
   getAllChantiers() {

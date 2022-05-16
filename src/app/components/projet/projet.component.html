@@ -41,9 +41,8 @@
           {{ data?.date | date: "dd/MM/yyyy" }}
         </td>
 
-        <td nz-row>
+        <td nz-row *ngIf="userRole === 'responsable'">
           <button
-            *ngIf="userRole === 'responsable'"
             (click)="deleteProjet(data.p_Id)"
             nz-button
             nzType="dashed"
