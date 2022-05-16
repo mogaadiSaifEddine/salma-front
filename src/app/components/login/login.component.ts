@@ -18,7 +18,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private useService: UserService,
     private router: Router,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -34,9 +35,14 @@ export class LoginComponent implements OnInit {
       this.useService.login(this.validateForm.value).subscribe(
         (res: any) => {
           console.log(res);
+          if (['password', 'notuser'].includes(res.message)) {
+            this.createMessage('error', 'Login Failed');
+            return;
+          }
           this.createMessage('success', 'Login Success');
           this.router.navigate(['/chant']);
           localStorage.setItem('role', res?.role);
+          this.userService.loggedIn.next(true);
         },
         (err: any) => {
           console.log(err);

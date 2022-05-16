@@ -1,6 +1,14 @@
 <nz-layout>
-  <nz-sider nzCollapsible nzWidth="200px">
-    <div class="logo"></div>
+  <nz-sider *ngIf="!!isAuth" nzCollapsible nzWidth="200px">
+    <div class="logo">
+      <!-- <button nzType="primary">
+        <i nz-icon nzType="logout" nzTheme="outline"></i>
+      </button> -->
+      <button (click)="logout()" nz-button nzType="primary">
+        <i nz-icon nzType="logout" nzTheme="outline"></i>
+        Log out
+      </button>
+    </div>
     <ul nz-menu nzTheme="dark" nzMode="inline">
       <li nz-menu-item>
         <!-- <span (click)="goToroute(item.path)">{{ item.name }}</span> -->

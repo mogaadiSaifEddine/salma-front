@@ -4,11 +4,12 @@ import { ChantierComponent } from './components/chantier/chantier.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProjetComponent } from './components/projet/projet.component';
 import { UsersComponent } from './components/users/users.component';
+import { AuthGuard } from './auth.guard';
 const routes: Routes = [
-  { path: 'chant', component: ChantierComponent },
-  { path: 'projet', component: ProjetComponent },
-  { path: 'auth', component: LoginComponent },
-  { path: 'user', component: UsersComponent },
+  { path: 'chant', component: ChantierComponent, canActivate: [AuthGuard] },
+  { path: 'projet', component: ProjetComponent, canActivate: [AuthGuard] },
+  { path: '', component: LoginComponent },
+  { path: 'user', component: UsersComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(private router: Router) {}
+  isAuth = false;
+  constructor(private router: Router, private userServiice: UserService) {}
   title = 'Salma';
   menRoutes = [
     {
@@ -24,6 +26,10 @@ export class AppComponent implements OnInit {
     },
   ];
   ngOnInit(): void {
+    this.userServiice.loggedIn.subscribe((data) => {
+      this.isAuth = data;
+      console.log(data);
+    });
     this.menRoutes = [
       {
         name: 'Chantiers',
@@ -38,5 +44,10 @@ export class AppComponent implements OnInit {
         path: 'demande',
       },
     ];
+  }
+  logout() {
+    this.userServiice.loggedIn.next(false);
+    localStorage.clear();
+    this.router.navigate(['/']);
   }
 }

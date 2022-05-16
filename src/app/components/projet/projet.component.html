@@ -39,6 +39,7 @@
 
         <td nz-row>
           <button
+            *ngIf="userRole === 'responsable'"
             (click)="deleteProjet(data.p_Id)"
             nz-button
             nzType="dashed"
@@ -48,6 +49,7 @@
             <i nz-icon nzType="delete"></i>
           </button>
           <button
+            *ngIf="userRole === 'responsable'"
             nz-button
             (click)="openModalUpdate(data)"
             nzType="dashed"
