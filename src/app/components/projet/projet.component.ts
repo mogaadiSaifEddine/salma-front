@@ -5,6 +5,7 @@ import { ProjetService } from 'src/app/services/projet.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { UserService } from 'src/app/services/user.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-projet',
@@ -39,6 +40,13 @@ export class ProjetComponent implements OnInit {
       listOfFilter: [],
       filterFn: null,
     },
+    {
+      name: "Date D'ajout  ",
+      sortOrder: null,
+      sortFn: (a: any, b: any) => a.date.localeCompare(b.date),
+      listOfFilter: [],
+      filterFn: null,
+    },
   ];
   constructor(
     private sharedService: SharedService,
@@ -46,7 +54,8 @@ export class ProjetComponent implements OnInit {
     private chantService: ChantierService,
     private userService: UserService,
     private message: NzMessageService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {

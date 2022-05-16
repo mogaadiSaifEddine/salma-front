@@ -25,7 +25,8 @@
         >
           {{ column.name }}
         </th>
-        <th>Actions</th>
+
+        <th *ngIf="userRole === 'responsable'">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -35,6 +36,9 @@
         </td>
         <td>
           {{ data?.chantier?.nom }}
+        </td>
+        <td>
+          {{ data?.date | date: "dd/MM/yyyy" }}
         </td>
 
         <td nz-row>
