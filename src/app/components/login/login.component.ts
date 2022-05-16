@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
           }
           this.createMessage('success', 'Login Success');
           this.router.navigate(['/chant']);
-          localStorage.setItem('role', res?.role);
+          localStorage.setItem('role', res?.role?.toLocaleLowerCase());
           this.userService.loggedIn.next(true);
         },
         (err: any) => {
