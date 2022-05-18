@@ -1,0 +1,100 @@
+<ng-template #avatarTemplate>
+  <nz-avatar
+    nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+  ></nz-avatar>
+</ng-template>
+<ng-template #coverTemplate>
+  <img
+    alt="example"
+    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+  />
+</ng-template>
+<ng-template #actionSetting>
+  <i nz-icon nzType="download"></i>
+</ng-template>
+
+<ng-template #actionEllipsis>
+  <i nz-icon nzType="ellipsis"></i>
+</ng-template>
+
+<nz-card>
+  <nz-card-meta nzTitle="{{ projetName }}"></nz-card-meta>
+  <nz-list nzGrid>
+    <div nz-row [nzGutter]="16">
+      <div nz-col [nzSpan]="8" *ngFor="let item of ispNames">
+        <ng-template #actionEdit>
+          <button (click)="openModal(item)">
+            <i nz-icon nzType="edit"></i>
+          </button>
+        </ng-template>
+        <nz-list-item>
+          <nz-card
+            style="width: 300px; margin: 60px"
+            [nzCover]="coverTemplate"
+            [nzActions]="[actionSetting, actionEdit, actionEllipsis]"
+          >
+            <nz-card-meta
+              nzTitle="{{ item.name }}"
+              nzDescription="This is the description"
+              [nzAvatar]="avatarTemplate"
+            ></nz-card-meta>
+          </nz-card>
+        </nz-list-item>
+      </div>
+    </div>
+  </nz-list>
+</nz-card>
+
+<nz-modal
+  [(nzVisible)]="modalVisible"
+  nzTitle="{{ validateForm.get('ispName')?.value }}"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzContent]="add"
+  nzOkText="Ok"
+  nzCancelText="Cancel"
+>
+</nz-modal>
+
+<ng-template [nzSpan]="24" #add>
+  <form [formGroup]="validateForm" nz-form [nzLayout]="'vertical'">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24" nzFor="chantier"> File </nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <nz-upload
+          nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          (nzChange)="handleChange($event)"
+        >
+          <button nz-button>
+            <i nz-icon nzType="upload"></i>
+            Click To Upload
+          </button>
+        </nz-upload>
+      </nz-form-control> </nz-form-item
+    ><nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="ispName">Responsable</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input
+          class="dropdown"
+          name="ispName"
+          type="ispName"
+          formControlName="ispName"
+          id="ispName"
+        />
+      </nz-form-control> </nz-form-item
+    ><nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="ispFile"
+        >ispFile Du Projet</nz-form-label
+      >
+      <nz-form-control [nzSpan]="14">
+        <input
+          class="dropdown"
+          name="ispFile"
+          type="ispFile"
+          formControlName="ispFile"
+          id="ispFile"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-template>
