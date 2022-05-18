@@ -27,7 +27,14 @@ export class UsersComponent implements OnInit {
     {
       name: 'Prenom  ',
       sortOrder: null,
-      sortFn: (a: any, b: any) => a.chantier.nom.localeCompare(b.chantier.nom),
+      sortFn: (a: any, b: any) => a.prenom.localeCompare(b.prenom),
+      listOfFilter: [],
+      filterFn: null,
+    },
+    {
+      name: 'Email  ',
+      sortOrder: null,
+      sortFn: (a: any, b: any) => a.email.localeCompare(b.email),
       listOfFilter: [],
       filterFn: null,
     },

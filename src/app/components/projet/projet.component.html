@@ -52,6 +52,14 @@
             <i nz-icon nzType="delete"></i>
           </button>
           <button
+            (click)="goToIspsPage(data.p_Id)"
+            nz-button
+            nzType="dashed"
+            nzShape="circle"
+          >
+            <i nz-icon nzType="eye" nzTheme="outline"></i>
+          </button>
+          <button
             *ngIf="userRole === 'responsable'"
             nz-button
             (click)="openModalUpdate(data)"
@@ -89,7 +97,7 @@
 >
 </nz-modal>
 <ng-template #add>
-  <form [formGroup]="validateForm" nz-formy>
+  <form [formGroup]="validateForm" nz-form [nzLayout]="'vertical'">
     <nz-form-item>
       <nz-form-label [nzSpan]="6" nzFor="chantier">Chantier</nz-form-label>
       <nz-form-control [nzSpan]="14">

@@ -19,6 +19,7 @@ export class ProjetService {
   }
   addProjet(projet: any) {
     console.log(projet);
+    projet.ISPDefultNames = [1];
 
     return this.http.post<any>(`${this.baseUrl}add`, projet);
   }

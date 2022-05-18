@@ -5,5 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class SharedService {
   chantierId: number | undefined;
+  projetId: number | undefined;
   constructor() {}
 }

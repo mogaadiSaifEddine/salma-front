@@ -24,6 +24,10 @@ export class AppComponent implements OnInit {
       name: 'Demande',
       path: 'demande',
     },
+    {
+      name: 'ISP',
+      path: 'isp',
+    },
   ];
   ngOnInit(): void {
     this.userServiice.loggedIn.subscribe((data) => {

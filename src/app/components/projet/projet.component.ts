@@ -6,6 +6,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import { UserService } from 'src/app/services/user.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-projet',
@@ -55,7 +56,8 @@ export class ProjetComponent implements OnInit {
     private userService: UserService,
     private message: NzMessageService,
     private fb: FormBuilder,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -156,12 +158,15 @@ export class ProjetComponent implements OnInit {
     this.isVisibleAdd = false;
   }
 
+  goToIspsPage(id: number) {
+    this.sharedService.projetId = id;
+    this.router.navigate(['/isp']);
+  }
   handleOk() {
     if (!this.validateForm.valid) {
       this.createMessage('error', 'Please fill all the required fields');
       return;
     }
-
     const channt = this.chantiers.find(
       (chant) => chant.c_Id == this.validateForm.get('chantier')?.value
     );
